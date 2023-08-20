@@ -3,6 +3,7 @@
 
 # large files
 data/
+.idea/
 models/
 scheduler/
 eval/outputs

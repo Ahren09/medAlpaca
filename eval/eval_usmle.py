@@ -27,6 +27,13 @@ import sys
 import os
 sys.path.append("..")
 
+cuda_path = "/usr/local/cuda-11.7/bin/nvcc"
+if "LD_LIBRARY_PATH" in os.environ:
+    os.environ["LD_LIBRARY_PATH"] += f"{cuda_path}"
+else:
+    os.environ["LD_LIBRARY_PATH"] = cuda_path
+
+
 import re
 import json
 import fire
