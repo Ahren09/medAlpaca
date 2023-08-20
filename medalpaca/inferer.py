@@ -1,7 +1,6 @@
 import sys
 import json
 import torch
-from peft import PeftModel
 from transformers import GenerationConfig, LlamaForCausalLM, LlamaTokenizer, AutoModelForCausalLM, AutoTokenizer
 from .handler import DataHandler
 
@@ -91,6 +90,8 @@ class Inferer:
         )
 
         if peft:
+            from peft import PeftModel
+
             model = PeftModel.from_pretrained(
                 model,
                 model_id=model_name,
