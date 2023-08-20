@@ -10,11 +10,9 @@ else:
     os.environ["LD_LIBRARY_PATH"] = cuda_path
 
 import re
-import json
 import fire
 import string
 
-from tqdm.autonotebook import tqdm
 from medalpaca.inferer import Inferer
 
 greedy_search = {
@@ -109,9 +107,6 @@ def main(
         base_model: str,  # "decapoda-research/llama-13b-hf",
         peft: bool,  # True,
         load_in_8bit: bool,  # True
-        path_to_exams: str,  # eval/data/test/
-        ntries: int = 5,
-        skip_if_exists: bool = True,
 ):
     model = Inferer(
         model_name=model_name,
@@ -121,16 +116,20 @@ def main(
         load_in_8bit=load_in_8bit,
     )
 
-    question = "What is Georgia Tech known for?"
+    questions = ["How is the Computer Science program in Georgia Tech?",
+                 "Cómo es el programa de Ciencias de la Computación en "
+                 "Georgia Tech", "佐治亚理工学院的计算机科学专业怎么样？", "जॉर्जिया टेक में कंप्यूटर विज्ञान कार्यक्रम कैसा है?"]
 
-    response = model(
-        instruction="Answer this multiple choice question.",
-        input=format_question(question),
-        output="The Answer to the question is:",
-        **sampling
-    )
-    response = strip_special_chars(response)
-    print(response)
+    for question in questions:
+        sampling['verbose'] = True
+        response = model(
+            instruction="Answer this question.",
+            input=question,
+            output="The Answer to the question is:",
+            **sampling
+        )
+        response = strip_special_chars(response)
+        print(response)
 
 
 if __name__ == "__main__":
