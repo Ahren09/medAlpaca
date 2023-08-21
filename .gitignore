@@ -144,3 +144,4 @@ download.txt
 .pyre/
 .DS_Store
 .vscode/
+/medalpaca-7b/

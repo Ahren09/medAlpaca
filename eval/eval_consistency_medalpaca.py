@@ -1,3 +1,4 @@
+import json
 import sys
 import os
 
@@ -108,28 +109,55 @@ def main(
         peft: bool,  # True,
         load_in_8bit: bool,  # True
 ):
-    model = Inferer(
-        model_name=model_name,
-        prompt_template=prompt_template,
-        base_model=base_model,
-        peft=peft,
-        load_in_8bit=load_in_8bit,
-    )
+
+
+    LANGUAGES = ["English", "Spanish", "Chinese", "Hindi"]
 
     questions = ["How is the Computer Science program in Georgia Tech?",
                  "Cómo es el programa de Ciencias de la Computación en "
                  "Georgia Tech", "佐治亚理工学院的计算机科学专业怎么样？", "जॉर्जिया टेक में कंप्यूटर विज्ञान कार्यक्रम कैसा है?"]
 
-    for question in questions:
+    questions = ["How do I prevent flu?",
+                 "Cómo prevengo la gripe", "佐治亚理工学院的计算机科学专业怎么样？",
+                 "जॉर्जिया टेक में कंप्यूटर विज्ञान कार्यक्रम कैसा है?"]
+
+    model = Inferer(
+        model_name=model_name,
+        prompt_template=f"../medalpaca/prompt_templates/medalpaca.json",
+        base_model=base_model,
+        peft=peft,
+        load_in_8bit=load_in_8bit,
+    )
+
+    prompt_template = model.data_handler.prompt_template = \
+            json.load(open(f"../medalpaca/prompt_templates/medalpaca_"
+                           f"English.json", 'r', encoding='utf-8'))
+
+
+    for i, question in enumerate(questions):
+        # model.data_handler.prompt_template = dict(prompt_template)
+        #
+        #
+        # model.data_handler.prompt_template['primer'] = model.data_handler.prompt_template['primer'].replace(
+        #     "LANGUAGE_NAME", LANGUAGES[i])
+        #
+        #
+        # print("Template:")
+        # print(model.data_handler.prompt_template)
+
         sampling['verbose'] = True
         response = model(
-            instruction="Answer this question.",
+            instruction=f"Answer this question in {LANGUAGES[i]}.",
             input=question,
             output="The Answer to the question is:",
             **sampling
         )
         response = strip_special_chars(response)
+
+        print("="*20)
+        print("> Response:")
         print(response)
+        print("="*20)
 
 
 if __name__ == "__main__":

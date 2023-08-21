@@ -1,0 +1,9 @@
+{
+    "description": "Hindi Template for medAlpaca..",
+    "primer": "हिंदी में ऐसा उत्तर लिखें जो प्रश्न का उचित उत्तर दे।",
+    "instruction": "\n\n### Instruction:\n",
+    "input": "\n\n### Input:\n",
+    "output": "\n\n### Response:\n",
+    "response_split": "### Response:"
+}
+

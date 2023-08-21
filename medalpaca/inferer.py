@@ -58,7 +58,7 @@ class Inferer:
             peft = peft
         )
         
-        tokenizer = self._load_tokenizer(base_model or model_name)
+        tokenizer = self._load_tokenizer(base_model or model_name, peft)
                 
         self.data_handler = DataHandler(
             tokenizer,
@@ -109,8 +109,9 @@ class Inferer:
 
         return model
     
-    def _load_tokenizer(self, model_name: str): 
-        if "llama" in model_name.lower():
+    def _load_tokenizer(self, model_name: str, peft: bool = False):
+
+        if "llama" in model_name.lower() or not peft:
             tokenizer = LlamaTokenizer.from_pretrained(model_name)
         else:
             tokenizer = AutoTokenizer.from_pretrained(model_name)

@@ -1,7 +1,7 @@
 {
-    "description": "Spanish Template for medAlpaca.",
-    "primer": "Write a response in Spanish that appropriately answers the question.",
-    "instruction": "",
+    "description": "Spanish Template for medAlpaca..",
+    "primer": "Escribe una respuesta en español que responda apropiadamente a la pregunta.",
+    "instruction": "\n\n### Instruction:\n",
     "input": "\n\n### Input:\n",
     "output": "\n\n### Response:\n",
     "response_split": "### Response:"
