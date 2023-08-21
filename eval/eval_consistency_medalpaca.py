@@ -53,7 +53,7 @@ sampling = {
     "do_sample": True,
     "top_k": 50,
     "num_beams": 1,
-    "max_new_tokens": 128,
+    "max_new_tokens": 512,
     "early_stopping": True,
     "temperature": 0.4,
     "top_p": 0.9
@@ -118,8 +118,8 @@ def main(
                  "Georgia Tech", "佐治亚理工学院的计算机科学专业怎么样？", "जॉर्जिया टेक में कंप्यूटर विज्ञान कार्यक्रम कैसा है?"]
 
     questions = ["How do I prevent flu?",
-                 "Cómo prevengo la gripe", "佐治亚理工学院的计算机科学专业怎么样？",
-                 "जॉर्जिया टेक में कंप्यूटर विज्ञान कार्यक्रम कैसा है?"]
+                 "Cómo prevengo la gripe", "我该如何预防流感？",
+                 "मैं फ़्लू से कैसे बचूँ?"]
 
     model = Inferer(
         model_name=model_name,
@@ -129,13 +129,13 @@ def main(
         load_in_8bit=load_in_8bit,
     )
 
-    prompt_template = model.data_handler.prompt_template = \
-            json.load(open(f"../medalpaca/prompt_templates/medalpaca_"
-                           f"English.json", 'r', encoding='utf-8'))
 
 
     for i, question in enumerate(questions):
-        # model.data_handler.prompt_template = dict(prompt_template)
+        prompt_template = model.data_handler.prompt_template = \
+            json.load(open(f"../medalpaca/prompt_templates/medalpaca_"
+                           f"{LANGUAGES[i]}.json", 'r', encoding='utf-8'))
+        model.data_handler.prompt_template = prompt_template
         #
         #
         # model.data_handler.prompt_template['primer'] = model.data_handler.prompt_template['primer'].replace(

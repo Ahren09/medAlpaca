@@ -1,6 +1,6 @@
 {
     "description": "Chinese Template for medAlpaca..",
-    "primer": "用中文写出以下问题的正确答案。",
+    "primer": "用中文回答以下问题。",
     "instruction": "\n\n### Instruction:\n",
     "input": "\n\n### Input:\n",
     "output": "\n\n### Response:\n",
